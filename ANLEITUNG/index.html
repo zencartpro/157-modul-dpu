@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Dynamische Preisaktualisierung 3.3.0 für Zen Cart 1.5.7 deutsch</title>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="content-language" content="de">
+<meta name="description" content="Dynamische Preisaktualisierung 3.3.0 für Zen Cart 1.5.7 deutsch">
+<link rel="stylesheet" type="text/css" href="includes/css/stylesheet.css">  
+<script type="text/javascript" src="includes/jscript/jscript_tabs.js"></script>
+</head>
+<body>
+<div id="wrapper">
+<div id="header">
+<h1>Dynamische Preisaktualisierung 3.3.0 für Zen Cart 1.5.7 deutsch</h1>
+</div>
+
+<div id="slidetabsmenu" style="display: none;">
+<ul>
+  <li> <a onClick="expandcontent('sc1', this)" href="javascript:void(0)"><span>Sinn und Zweck</span></a></li>
+  <li> <a onClick="expandcontent('sc2', this)" href="javascript:void(0)"><span>Installation</span></a></li>
+
+   <li> <a onClick="expandcontent('sc4', this)" href="javascript:void(0)"><span>Deinstallation</span></a></li>
+  <li> <a onClick="expandcontent('sc5', this)" href="javascript:void(0)"><span>Download</span></a></li>
+  <li> <a onClick="expandcontent('sc6', this)" href="javascript:void(0)"><span>Unterstützen</span></a></li>
+ </ul>
+</div>
+<br style="clear: both;">
+
+<!--Begin tabcontainer-->
+<div id="tabcontentcontainer">
+
+<!--Begin sc1-->
+<div class="tabcontent" id="sc1" style="display: block;">
+<div class="textcontent">
+<div class="regularlist">
+
+<h2>Sinn und Zweck dieses Moduls</h2>
+
+ <p>   Diese Erweiterung ist dann interessant, wenn Artikel mit Attributen angeboten werden, die den Preis verändern.<br>
+   Bei Auswahl eines Attributes, das den Preis erhöht oder senkt wird die Preisanzeige beim Artikel auf der Artikeldetailseite dynamisch aktualisiert.<br>
+   Ebenso wird die Preisanzeige aktualisiert, wenn mehrere Stück eines Artikels ausgewählt werden.<br>
+   Optional kann eine eigene Sidebox aktiviert werden, die die Preisberechnung verdeutlicht.
+   <br>
+ </p>
+<h3>Copyright,  Lizenz, Changelog</h3>
+<p>deutsche Übersetzung/Anpassung des Moduls Dynamic Price Updater von Chrome und mc12345678 für die deutsche Zen Cart Version:<br>
+  http://www.zen-cart.com/downloads.php?do=file&amp;id=1301
+<p>Version 3.3.0<br>
+  2022-10-25<br>
+  Anpassungen für 1.5.7 deutsch<br/>
+  Bugfixes im Uninstaller
+<p> Portions Copyright (c) 2003 osCommerce<br>
+  Portions Copyright     (c) 2003-2022 Zen Cart</p>
+<p>This contribution is subject to version 3.0 of the GPL license available through the world-wide-web at the following url:<br>
+  <a href="http://www.zen-cart-pro.at/license/3_0.txt">http://www.zen-cart-pro.at/license/3_0.txt</a></p>
+</div>
+</div>
+</div>
+<!--End sc1-->
+
+<!--Begin sc2-->
+<div class="tabcontent" id="sc2" style="display: block;">
+<div class="textcontent">
+<div class="regularlist">
+
+<h2>Installation</h2>
+<h3>Voraussetzungen</h3>
+  
+  <p>Dieses Modul ist<strong> nur für Zen Cart 1.5.7 deutsch geeignet</strong></p>
+  <p>    Für den Einbau dieses Moduls sollten Sie über folgende Werkzeuge verfügen:<br>
+    <br>
+    1) Ein guter Texteditor. <br>
+    Damit ist nicht das in Windows enthaltene Notepad oder Microsoft Word gemeint.<br>
+    Sie benötigen einen Texteditor, der utf-8 versteht und auch im Format utf-8 ohne BOM abspeichern kann.<br>
+    Meine Empfehlung: <a href="http://www.ultraedit.com/loc/de/index_de.html" target="_blank">UltraEdit</a> (kostenlose 30 Tage Testversion verfügbar)<br>
+    Ebenfalls gut geeignet ist der kostenlose Texteditor <a href="http://notepad-plus.sourceforge.net/de/site.htm" target="_blank">Notepad++ </a><br>
+  </p>
+  <p>2) Ein Tool zum Vergleichen von Dateien<br>
+    Bei der Installation dieses Moduls ist es erforderlich, dass Sie den   Inhalt einiger Ihrer bestehenden Zen Cart Dateien mit dem Inhalt der neuen Moduldateien vergleichen und die Änderungen zusammenführen   ("mergen").<br>
+    Meine Empfehlung: <a href="http://www.scootersoftware.com/" target="_blank">BeyondCompare</a> (kostenlose 30 Tage Testversion verfügbar)<br>
+    Ebenfalls gut geeignet ist das kostenlose Programm <a href="http://winmerge.org/" target="_blank">WinMerge </a></p>
+  <p><br>
+  <strong>Empfehlung:</strong><br>
+  <br>
+  Dieses Modul erst in einem Testsystem einbauen und dort   konfigurieren/testen und endgültig an die eigenen Wünsche anpassen. Erst dann in einem Liveshop einsetzen! Sichern Sie unbedingt alle   Dateien Ihres Shops per FTP und sichern Sie die Datenbank mit phpMyAdmin   oder anderen geeigneten Tools!</p>
+<div id="warning"><b>WICHTIG</b><br>
+Vor dem Einbau dieser Änderungen:<br>
+BACKUP von Shop und Datenbank machen! <br>
+Keine Haftung, Verwendung auf eigene Gefahr!<br>
+BACKUP gemacht? Ok, dann weiterlesen...
+</div>
+<p>Die Installation erfolgt in folgenden Schritten. Halten Sie diesen Ablauf ein!<br>
+  <br>
+!!!! Sollte bereits eine frühere Version dieses Moduls verwendet werden, diese vor der Installation komplett entfernen !!!<br>
+</p>
+<p><br>
+Die Installation erfolgt in folgenden Schritten, halten Sie den Ablauf bitte ein:</p>
+<p>1)<br>
+  Entfernen Sie zunächst etwaige alte Datenbankeinträge dieses Moduls.<br>
+  Die uninstall.sql im Ordner UNINSTALL mit einem Texteditor öffnen, Inhalt ins Eingabefeld in der Zen Cart Administration unter Tools > SQL Patches installieren kopieren und absenden.</p>
+<p>2)<br>
+  Folgende Datei aus Ihrem Shopverzeichnis herunterladen und mit einem Texteditor öffnen:<br>
+  includes/templates/DEINTEMPLATE/templates/tpl_product_info_display.php<br>
+  DEINTEMPLATE steht dabei für den Namen des im Shop aktiven Templates, z.B. responsive_classic<br>
+  Sollte in Ihrem eigenen Templateverzeichnis keine tpl_product_info_display.php vorhanden sein, verwenden Sie<br>
+  includes/templates/template_default/templates/tpl_product_info_display.php</p>
+<p>Der Abschnitt für die Preisanzeige ist meistens so definiert:</p>
+<pre><code>
+  &lt;!--bof Product Price block --&gt;
+  &lt;div id=&quot;productPrices&quot; class=&quot;productGeneral&quot;&gt;</code></pre>
+  <p>oder</p>
+  <pre><code>
+  &lt;!--bof Product Price block --&gt;
+  &lt;h2 id=&quot;productPrices&quot; class=&quot;productGeneral&quot;&gt;</code></pre>
+<p>Hier ein &lt;span id=&quot;dpu&quot;&gt; einfügen, so dass es so aussieht:</p>
+<pre><code>
+  &lt;!--bof Product Price block --&gt;
+  &lt;!--change for DPU --&gt;
+  &lt;div id=&quot;productPrices&quot; class=&quot;productGeneral&quot;&gt;&lt;span id=&quot;dpu&quot;&gt;</code></pre>
+  <p>oder</p>
+  <pre><code>
+  &lt;!--bof Product Price block --&gt;
+  &lt;!--change for DPU --&gt;
+  &lt;h2 id=&quot;productPrices&quot; class=&quot;productGeneral&quot;&gt;&lt;span id=&quot;dpu&quot;&gt;</code></pre>
+<p>Nach der Änderung hochladen nach includes/templates/DEINTEMPLATE/templates/tpl_product_info_display.php und die bestehende Datei damit überschreiben</p>
+<p>Folgende Datei aus Ihrem Shopverzeichnis herunterladen und mit einem Texteditor öffnen:<br>
+  includes/languages/german/extra_definitions/DEINTEMPLATE/rl.vat_info.php<br>
+  Sollte es in Ihrem eigenen Templateverzeichnis keine rl.vat_info.php geben, verwenden Sie:<br>
+  includes/languages/german/extra_definitions/rl.vat_info.php</p>
+<p>Diese Datei hat normalerweise folgenden Inhalt:</p>
+<pre><code>
+define('VAT_SHOW_TEXT_VERSANDKOSTENFREI','&lt;span class=&quot;taxAddon&quot;&gt;inkl. %s MwSt.&lt;/span&gt;');
+if(DISPLAY_PRICE_WITH_TAX=='true')
+  define('VAT_SHOW_TEXT','&lt;span class=&quot;taxAddon&quot;&gt;inkl. %s MwSt.&lt;br/&gt;
+   zzgl. &lt;a href=&quot;' . zen_href_link(FILENAME_SHIPPING) . '&quot;&gt;Versandkosten&lt;/a&gt;&lt;/span&gt;');
+  else
+  define('VAT_SHOW_TEXT','&lt;span class=&quot;taxAddon&quot;&gt;zzgl. %s MwSt.&lt;br/&gt; 
+  zzgl. &lt;a href=&quot;' . zen_href_link(FILENAME_SHIPPING) . '&quot;&gt;Versandkosten&lt;/a&gt;&lt;/span&gt;');
+  </code></pre>
+<p>Schließendes &lt;/span&gt; am Anfang einfügen und ändern auf:</p>
+<pre><code>
+define('VAT_SHOW_TEXT_VERSANDKOSTENFREI','&lt;/span&gt;&lt;br/&gt;&lt;span class=&quot;taxAddon&quot;&gt;inkl. %s MwSt.&lt;/span&gt;');
+if(DISPLAY_PRICE_WITH_TAX=='true')
+  define('VAT_SHOW_TEXT','&lt;/span&gt;&lt;br/&gt;&lt;span class=&quot;taxAddon&quot;&gt;inkl. %s MwSt.&lt;br/&gt; 
+  zzgl. &lt;a href=&quot;' . zen_href_link(FILENAME_SHIPPING) . '&quot;&gt;Versandkosten&lt;/a&gt;&lt;/span&gt;');
+  else
+  define('VAT_SHOW_TEXT','&lt;/span&gt;&lt;br/&gt;&lt;span class=&quot;taxAddon&quot;&gt;zzgl. %s MwSt.&lt;br/&gt;
+   zzgl. &lt;a href=&quot;' . zen_href_link(FILENAME_SHIPPING) . '&quot;&gt;Versandkosten&lt;/a&gt;&lt;/span&gt;');</code></pre>
+<p>Falls im Shop auch die englische Sprache oder andere Sprachen aktiv sind, dieselbe Änderungen in der jeweiligen Sprachdatei der englischen oder anderen Sprache vornehmen und ins Shopverzeichnis hochladen</p>
+<p>Diese Änderungen sind nötig, damit die Anzeige incl. Mwst. zzgl. Versandkosten von der Preisaktualisierung nicht überschrieben wird<br>
+</p>
+<p>3)<br>
+  In die Zen Cart Administration einloggen<br>
+</p>
+<p>4)<br>
+  Im Ordner NEUEDATEIEN den Ordner DEINADMIN auf den Namen Ihres admin Verzeichnisses umbenennen.
+    <br>
+    Den Ordner includes/templates/DEINTEMPLATE auf den Namen des im Shop aktiven Templates umbenennen (z.B. responsive_classic).
+    <br>
+  Dann in der vorgegebenen Struktur ins Shopverzeichnis hochladen, dadurch werden keine bestehenden Dateien überschrieben.<br>
+</p>
+<p>5)<br>
+  In der Zen Cart Administration auf irgendeinen Menüpunkt clicken, Sie sollten nun  grüne Erfolgshinweise sehen und unter Konfiguration ist der neue Menüpunkt Dynamische Preisaktualisierung vorhanden.<br>
+  Unter Dynamische Preisaktualisierung nun unter DPU Status die Funktion einschalten<br>
+  Die übrigen Einstellungsmöglichkeiten müssen nicht verändert werden, ihre Verwendung ist in der Administration erklärt.<br>
+</p>
+<p>6)<br>
+  Optional<br>
+  Zusätzliche Sidebox für die Preisberechnung installieren<br>
+  Im Ordner OPTIONAL den Ordner includes/modules/sideboxes/DEINTEMPLATE und den Ordner includes/templates/DEINTEMPLATE auf den Namen des im Shop aktiven Templates umbenennen und dann in der vorgegebenen Struktur hochladen.<br>
+  Neue Sidebox aktivieren unter Tools &gt; Boxlayout<br>
+</p>
+<p>7)<br>
+  Optional<br>
+  In includes/languages/german/extra_definitions/dynamic_price_updater.php<br>
+  ist folgende Definition leer, weil sie meist nicht gewünscht ist:<br>
+  define('UPDATER_PREFIX_TEXT', '');<br>
+  Falls Sie vor dem Preis einen zusätzlichen Text anzeigen wollen, z.B. &quot;Ihr Preis:&quot;, dann können Sie den hier definieren, z.B.<br>
+  define('UPDATER_PREFIX_TEXT', 'Ihr Preis: ');</p>
+
+  </div>
+</div>
+</div>
+
+<!--End sc2-->
+
+
+
+<!--Begin sc4-->
+<div class="tabcontent" id="sc4" style="display: block;">
+<div class="textcontent">
+<div class="regularlist">
+
+<h2>DEINSTALLATION</h2>
+<p>Um das Modul komplett zu entfernen:
+  <br>
+  1. Alle von diesem Modul neu angelegten Dateien vom Server löschen.<br/>
+2. Alle von diesem Modul geänderten Dateien wieder mit den Originaldateien ersetzen<br/>
+3. Die uninstall.sql im Ordner UNINSTALL mit einem Texteditor öffnen, Inhalt ins Eingabefeld unter Tools > SQL Patches installieren kopieren und absenden.<br/>
+Dadurch werden die Konfigurationseinstellungen aus der Datenbank entfernt.</p>
+</div>
+</div>
+</div>
+<!--End sc4-->
+
+<!--Begin sc5-->
+<div class="tabcontent" id="sc5" style="display: block;">
+<div class="textcontent">
+<div class="regularlist">
+<h2>Download</h2>
+<p>Dieses Modul steht kostenlos auf Github zum Download bereit.</p>
+<p>Freigegebene getestete Versionen für den Einsatz in Livesystemen ausschließlich auf Github unter Releases herunterladen:<br>
+  <a href="https://github.com/zencartpro/157-modul-dpu/releases" target="_blank"><b>https://github.com/zencartpro/157-modul-dpu/releases</b></a></p>
+
+
+</div>
+</div>
+</div>
+<!--End sc5-->
+
+<!--Begin sc6-->
+<div class="tabcontent" id="sc6" style="display: block;">
+<div class="textcontent">
+<div class="regularlist">
+
+<h2>Unterstützen</h2>
+<p>Sie finden dieses Modul nützlich?</p>
+<p>Es steht Ihnen kostenfrei im Rahmen der GNU General Public License zur Verfügung. <br>
+  Sie können diese Software kostenfrei benutzen, Änderungen vornehmen, etc.<br/>
+Da wir Ihnen diese Software kostenfrei zur Verfügung stellen, freuen wir uns über Spenden.<br>
+Diese Spenden helfen uns, die Kosten für die Wartung, Upgrades und die stetige Weiterentwicklung dieser Software für Ihren Online-Shop zu decken.</p>
+<p><a href="https://donorbox.org/spende-fur-die-weiterentwicklung-der-deutschen-zen-cart-version" target="_blank"><img src="https://www.zen-cart-pro.at/zencartpro-donation-white.png" alt="Spende für die Weiterentwicklung der deutschen Zen Cart Version" title="Spende für die Weiterentwicklung der deutschen Zen Cart Version"></a></p>
+<br/><br/>
+<p>Du bist Entwickler und willst helfen, die deutsche Zen Cart Version noch besser zu machen?<br>
+  Beteilige Dich auf Github:<br>
+  <a href="https://github.com/zencartpro" target="_blank"><strong>https://github.com/zencartpro</strong></a></p>
+<br/><br/>
+</div>
+</div>
+</div>
+<!--End sc6-->
+</div>
+<div id="footer">
+Ein Modul von <a href="https://www.zen-cart-pro.at" target="_blank">www.zen-cart-pro.at</a> - Die deutsche Zen Cart Version
+</div>
+</div>
+<!--end tabcontainer-->
+<script type="text/javascript">document.getElementById('sc1').style.display = 'none';</script>
+<script type="text/javascript">document.getElementById('sc2').style.display = 'none';</script>
+<script type="text/javascript">document.getElementById('sc4').style.display = 'none';</script>
+<script type="text/javascript">document.getElementById('sc5').style.display = 'none';</script>
+<script type="text/javascript">document.getElementById('sc6').style.display = 'none';</script>
+<script type="text/javascript">ShowTabs()</script>
+<script type="text/javascript">
+// We only show the tab links if JavaScript is available/active.
+<!--
+if (document.getElementById("slidetabsmenu") != null) {
+  document.getElementById('slidetabsmenu').style.display = "block";
+}
+//-->
+</script>
+
+</body></html>
