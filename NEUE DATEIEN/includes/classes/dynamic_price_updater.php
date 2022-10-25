@@ -1,9 +1,11 @@
 <?php
 /**
  * @package Dynamic Price Updater for Zen Cart German 1.5.7
+ * Zen Cart German Specific
  * @copyright Dan Parry (Chrome) / Erik Kerkhoven (Design75) / mc12345678
  * @copyright Copyright 2003-2022 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
+ * Zen Cart German Version - www.zen-cart-pro.at
  * @license https://www.zen-cart-pro.at/license/3_0.txt GNU General Public License V3.0
  * @version $Id: dynamic_price_updater.php 2022-10-25 16:38:51Z webchills $
  */
@@ -48,7 +50,7 @@ class DPU extends base {
    * @return DPU
    */
   public function __construct() {
-//    global $db; // Variable unused.
+
     // grab the shopping cart class and instantiate it
     $this->shoppingCart = new shoppingCart();
   }
@@ -96,7 +98,6 @@ class DPU extends base {
     $this->notify('NOTIFY_DYNAMIC_PRICE_UPDATER_PREPARE_PRICE_DISPLAY');
 
     switch (true) {
-        //case ($this->product_stock <= 0 && (($this->num_options == $this->unused && !empty($this->new_temp_attributes)) || ($this->num_options > $this->unused && !empty($this->unused)))):
         case ($this->attributeDisplayStartAtPrices() && $this->num_options == $this->unused && !empty($this->new_temp_attributes)):
             $this->prefix = UPDATER_PREFIX_TEXT_STARTING_AT;
             $this->preDiscPrefix = UPDATER_PREFIX_TEXT_STARTING_AT;
@@ -320,7 +321,7 @@ class DPU extends base {
    */
   protected function insertProduct() {
     global $db;
-//    $this->shoppingCart->contents[$_POST['products_id']] = array('qty' => (float)$_POST['cart_quantity']);
+
     $attributes = array();
 
     foreach ($_POST as $key => $val) {
@@ -453,7 +454,7 @@ class DPU extends base {
             $option = substr($option, strlen(TEXT_PREFIX));
             $attr_value = stripslashes($value);
             $value = PRODUCTS_OPTIONS_VALUES_TEXT_ID;
-//            $product_info['attributes_values'][$option] = $attr_value;
+
 
             // -----
             // Check that the length of this TEXT attribute is less than or equal to its "Max Length" definition. While there
@@ -474,11 +475,11 @@ class DPU extends base {
         if (!$blank_value) {
           if (is_array($value)) {
             foreach ($value as $opt => $val) {
-//              $product_info['attributes'][$option . '_chk' . $val] = $val;
+
               $this->shoppingCart->contents[$products_id]['attributes'][$option . '_chk' . $val] = $val;
             }
           } else {
-//            $product_info['attributes'][$option] = $value;
+
             $this->shoppingCart->contents[$products_id]['attributes'][$option] = $value;
           }
         }
@@ -497,20 +498,9 @@ class DPU extends base {
   protected function getSideboxContent() {
     global $currencies, $db;
 
-/*    $product_check = $db->Execute("SELECT products_tax_class_id FROM " . TABLE_PRODUCTS . " WHERE products_id = '" . (int)$_POST['products_id'] . "'" . " LIMIT 1");
-    $product = $db->Execute("SELECT products_id, products_price, products_tax_class_id, products_weight,
-                      products_priced_by_attribute, product_is_always_free_shipping, products_discount_type, products_discount_type_from,
-                      products_virtual, products_model
-                      FROM " . TABLE_PRODUCTS . "
-                      WHERE products_id = '" . (int)$_POST['products_id'] . "'");
-
-    $prid = $product->fields['products_id'];
-    $products_tax = zen_get_tax_rate(0);
-    $products_price = $product->fields['products_price'];
-    $qty = (float)$_POST['cart_quantity'];*/
     $out = array();
     $global_total = 0;
-    //$products = array(); // Unnecessary define
+    
     $products = $this->shoppingCart->get_products();
     for ($i=0, $n=count($products); $i<$n; $i++) 
     {
@@ -530,9 +520,9 @@ class DPU extends base {
 
 
       if (is_array($this->shoppingCart->contents[$products[$i]['id']]['attributes'])) {
-//    while (isset($this->shoppingCart->contents[$_POST['products_id']]['attributes']) && list($option, $value) = each($this->shoppingCart->contents[$_POST['products_id']]['attributes'])) {
+
         foreach ($this->shoppingCart->contents[$products[$i]['id']]['attributes'] as $option => $value) {
-          // $adjust_downloads ++; // not used? mc12345678 18-05-05
+         
 
           $attribute_price = $db->Execute("SELECT *
                                     FROM " . TABLE_PRODUCTS_ATTRIBUTES . "

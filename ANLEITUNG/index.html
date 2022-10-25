@@ -40,16 +40,16 @@
  <p>   Diese Erweiterung ist dann interessant, wenn Artikel mit Attributen angeboten werden, die den Preis verändern.<br>
    Bei Auswahl eines Attributes, das den Preis erhöht oder senkt wird die Preisanzeige beim Artikel auf der Artikeldetailseite dynamisch aktualisiert.<br>
    Ebenso wird die Preisanzeige aktualisiert, wenn mehrere Stück eines Artikels ausgewählt werden.<br>
-   Optional kann eine eigene Sidebox aktiviert werden, die die Preisberechnung verdeutlicht.
-   <br>
  </p>
 <h3>Copyright,  Lizenz, Changelog</h3>
-<p>deutsche Übersetzung/Anpassung des Moduls Dynamic Price Updater von Chrome und mc12345678 für die deutsche Zen Cart Version:<br>
+<p>deutsche Übersetzung/Anpassung des Moduls Dynamic Price Updater von Chrome, Design75 und mc12345678 für die deutsche Zen Cart Version:<br>
   http://www.zen-cart.com/downloads.php?do=file&amp;id=1301
 <p>Version 3.3.0<br>
   2022-10-25<br>
   Anpassungen für 1.5.7 deutsch<br/>
   Bugfixes im Uninstaller
+  <br>
+  veraltete Sidebox entfernt
 <p> Portions Copyright (c) 2003 osCommerce<br>
   Portions Copyright     (c) 2003-2022 Zen Cart</p>
 <p>This contribution is subject to version 3.0 of the GPL license available through the world-wide-web at the following url:<br>
@@ -166,12 +166,6 @@ if(DISPLAY_PRICE_WITH_TAX=='true')
   Die übrigen Einstellungsmöglichkeiten müssen nicht verändert werden, ihre Verwendung ist in der Administration erklärt.<br>
 </p>
 <p>6)<br>
-  Optional<br>
-  Zusätzliche Sidebox für die Preisberechnung installieren<br>
-  Im Ordner OPTIONAL den Ordner includes/modules/sideboxes/DEINTEMPLATE und den Ordner includes/templates/DEINTEMPLATE auf den Namen des im Shop aktiven Templates umbenennen und dann in der vorgegebenen Struktur hochladen.<br>
-  Neue Sidebox aktivieren unter Tools &gt; Boxlayout<br>
-</p>
-<p>7)<br>
   Optional<br>
   In includes/languages/german/extra_definitions/dynamic_price_updater.php<br>
   ist folgende Definition leer, weil sie meist nicht gewünscht ist:<br>

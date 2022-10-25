@@ -8,4 +8,3 @@ Freigegebene getestete Versionen für den Einsatz in Livesystemen ausschließlic
 Diese Erweiterung ist dann interessant, wenn Artikel mit Attributen angeboten werden, die den Preis verändern.
 * Bei Auswahl eines Attributes, das den Preis erhöht oder senkt wird die Preisanzeige beim Artikel auf der Artikeldetailseite dynamisch aktualisiert.
 * Ebenso wird die Preisanzeige aktualisiert, wenn mehrere Stück eines Artikels ausgewählt werden.
-* Optional kann eine eigene Sidebox aktiviert werden, die die Preisberechnung verdeutlicht. 
