@@ -77,7 +77,7 @@
     Ebenfalls gut geeignet ist der kostenlose Texteditor <a href="http://notepad-plus.sourceforge.net/de/site.htm" target="_blank">Notepad++ </a><br>
   </p>
   <p>2) Ein Tool zum Vergleichen von Dateien<br>
-    Bei der Installation dieses Moduls ist es erforderlich, dass Sie den   Inhalt einiger Ihrer bestehenden Zen Cart Dateien mit dem Inhalt der neuen Moduldateien vergleichen und die Änderungen zusammenführen   ("mergen").<br>
+    Bei der Installation dieses Moduls ist es erforderlich, dass Sie den  Inhalt einiger Ihrer bestehenden Zen Cart Dateien mit dem Inhalt der neuen Moduldateien vergleichen und die Änderungen zusammenführen   ("mergen").<br>
     Meine Empfehlung: <a href="http://www.scootersoftware.com/" target="_blank">BeyondCompare</a> (kostenlose 30 Tage Testversion verfügbar)<br>
     Ebenfalls gut geeignet ist das kostenlose Programm <a href="http://winmerge.org/" target="_blank">WinMerge </a></p>
   <p><br>
@@ -160,12 +160,17 @@ if(DISPLAY_PRICE_WITH_TAX=='true')
     <br>
   Dann in der vorgegebenen Struktur ins Shopverzeichnis hochladen, dadurch werden keine bestehenden Dateien überschrieben.<br>
 </p>
-<p>5)<br>
-  In der Zen Cart Administration auf irgendeinen Menüpunkt clicken, Sie sollten nun  grüne Erfolgshinweise sehen und unter Konfiguration ist der neue Menüpunkt Dynamische Preisaktualisierung vorhanden.<br>
-  Unter Dynamische Preisaktualisierung nun unter DPU Status die Funktion einschalten<br>
-  Die übrigen Einstellungsmöglichkeiten müssen nicht verändert werden, ihre Verwendung ist in der Administration erklärt.<br>
+<p>5) <br/>In neueren 1.5.7 Versionen (nach 1.5.7e) ist in includes/classes/shopping_cart.php $total_before_discounts als protected gesetzt. Diese Version des Dynamic Price Updater kann daher darauf nicht zugreifen und es ist nötig $total_before_discounts als public zu setzen.<br/>Ändern Sie daher in Ihrer includes/classes/shopping_cart.php falls nötig ca. Zeile 66 von:<br/>
+protected $total_before_discounts;<br/>
+auf:<br/>
+public $total_before_discounts;<br/>
+Eine entsprechende Beispieldatei für Zen Cart 1.5.7f und höher finden Sie im Ordner GEAENDERTE DATEIEN
 </p>
 <p>6)<br>
+  In der Zen Cart Administration auf irgendeinen Menüpunkt clicken, Sie sollten nun  grüne Erfolgshinweise sehen und unter Konfiguration ist der neue Menüpunkt Dynamische Preisaktualisierung vorhanden.<br>
+  Unter Dynamische Preisaktualisierung nun unter DPU Status die Funktion einschalten<br>
+  Die übrigen Einstellungsmöglichkeiten müssen nicht verändert werden, ihre Verwendung ist in der Administration erklärt.</p>
+<p>7)<br>
   Optional<br>
   In includes/languages/german/extra_definitions/dynamic_price_updater.php<br>
   ist folgende Definition leer, weil sie meist nicht gewünscht ist:<br>
