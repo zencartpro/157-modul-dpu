@@ -1,5 +1,5 @@
 ########################################################################
-# Dynamic Price Updater 3.3.0 UNINSTALL - 2022-10-25 - webchills
+# Dynamic Price Updater 4.4.0 UNINSTALL - 2023-02-25 - webchills
 # Nur ausführen, wenn Sie das Modul aus der Datenbank entfernen wollen!
 ########################################################################
 
