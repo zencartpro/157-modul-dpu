@@ -39,7 +39,7 @@
 
  <p>   Diese Erweiterung ist dann interessant, wenn Artikel mit Attributen angeboten werden, die den Preis verändern.<br>
    Bei Auswahl eines Attributes, das den Preis erhöht oder senkt wird die Preisanzeige beim Artikel auf der Artikeldetailseite dynamisch aktualisiert.<br>
- </p>
+   Ebenso wird die Preisanzeige aktualisiert, wenn mehrere Stück eines Artikels ausgewählt werden. </p>
 <h3>Copyright, Lizenz, Changelog, Credits</h3>
 <p>deutsche Übersetzung/Anpassung des Moduls Dynamic Price Updater von Chrome, Design75, mc12345678, Zen4All und torvista für die deutsche Zen Cart Version</p>
   <p>Version 4.0.0<br>
@@ -47,7 +47,12 @@
 - Code für Klasse aus includes/classes/dynamic_price_updater.php verlegt nach includes/classes/ajax/zcDPU_Ajax.php<br>
 - Veralteten JSON oder XML Code entfernt und durch Zen Cart eigene Ajax Funktionalität ersetzt<br>
 - Fixes für Notice und Warning Logs unter PHP 8.0.x <br>
-- Fixes von torvista und Zen4all integriert</p>
+- Fixes von torvista und Zen4all integriert<br>
+- Optionales Debugging Logfile integriert
+<br>
+- Alte Sidebox Funktionen und Konfigurationseinstellungen entfernt<br>
+- Anleitung aktualisiert
+  </p>
 <p>Version 3.3.0<br>
   2022-10-25<br>
   - Anpassungen für 1.5.7 deutsch<br/>
@@ -107,9 +112,6 @@ BACKUP gemacht? Ok, dann weiterlesen...
 <p><br>
 Die Installation erfolgt in folgenden Schritten, halten Sie den Ablauf bitte ein:</p>
 <p>1)<br>
-  Entfernen Sie zunächst etwaige alte Datenbankeinträge dieses Moduls.<br>
-  Die uninstall.sql im Ordner UNINSTALL mit einem Texteditor öffnen, Inhalt ins Eingabefeld in der Zen Cart Administration unter Tools > SQL Patches installieren kopieren und absenden.</p>
-<p>2)<br>
   Folgende Datei aus Ihrem Shopverzeichnis herunterladen und mit einem Texteditor öffnen:<br>
   includes/templates/DEINTEMPLATE/templates/tpl_product_info_display.php<br>
   DEINTEMPLATE steht dabei für den Namen des im Shop aktiven Templates, z.B. responsive_classic<br>
@@ -160,27 +162,25 @@ if(DISPLAY_PRICE_WITH_TAX=='true')
 <p>Falls im Shop auch die englische Sprache oder andere Sprachen aktiv sind, dieselbe Änderungen in der jeweiligen Sprachdatei der englischen oder anderen Sprache vornehmen und ins Shopverzeichnis hochladen</p>
 <p>Diese Änderungen sind nötig, damit die Anzeige incl. Mwst. zzgl. Versandkosten von der Preisaktualisierung nicht überschrieben wird<br>
 </p>
-<p>3)<br>
+<p>2)<br>
   In die Zen Cart Administration einloggen<br>
 </p>
-<p>4)<br>
+<p>3)<br>
   Im Ordner NEUEDATEIEN den Ordner DEINADMIN auf den Namen Ihres admin Verzeichnisses umbenennen.
-    <br>
-    Den Ordner includes/templates/DEINTEMPLATE auf den Namen des im Shop aktiven Templates umbenennen (z.B. responsive_classic).
     <br>
   Dann in der vorgegebenen Struktur ins Shopverzeichnis hochladen, dadurch werden keine bestehenden Dateien überschrieben.<br>
 </p>
-<p>5) <br/>In neueren 1.5.7 Versionen (nach 1.5.7e) ist in includes/classes/shopping_cart.php $total_before_discounts als protected gesetzt. Diese Version des Dynamic Price Updater kann daher darauf nicht zugreifen und es ist nötig $total_before_discounts als public zu setzen.<br/>Ändern Sie daher in Ihrer includes/classes/shopping_cart.php falls nötig ca. Zeile 66 von:<br/>
+<p>4) <br/>In neueren 1.5.7 Versionen (nach 1.5.7e) ist in includes/classes/shopping_cart.php $total_before_discounts als protected gesetzt. Diese Version des Dynamic Price Updater kann daher darauf nicht zugreifen und es ist nötig $total_before_discounts als public zu setzen.<br/>Ändern Sie daher in Ihrer includes/classes/shopping_cart.php falls nötig ca. Zeile 66 von:<br/>
 protected $total_before_discounts;<br/>
 auf:<br/>
 public $total_before_discounts;<br/>
 Eine entsprechende Beispieldatei für Zen Cart 1.5.7f und höher finden Sie im Ordner GEAENDERTE DATEIEN
 </p>
-<p>6)<br>
+<p>5)<br>
   In der Zen Cart Administration auf irgendeinen Menüpunkt clicken, Sie sollten nun  grüne Erfolgshinweise sehen und unter Konfiguration ist der neue Menüpunkt Dynamische Preisaktualisierung vorhanden.<br>
   Unter Dynamische Preisaktualisierung nun unter DPU Status die Funktion einschalten<br>
   Die übrigen Einstellungsmöglichkeiten müssen nicht verändert werden, ihre Verwendung ist in der Administration erklärt.</p>
-<p>7)<br>
+<p>6)<br>
   Optional<br>
   In includes/languages/german/extra_definitions/dynamic_price_updater.php<br>
   ist folgende Definition leer, weil sie meist nicht gewünscht ist:<br>
@@ -188,7 +188,7 @@ Eine entsprechende Beispieldatei für Zen Cart 1.5.7f und höher finden Sie im O
   Falls Sie vor dem Preis einen zusätzlichen Text anzeigen wollen, z.B. &quot;Ihr Preis:&quot;, dann können Sie den hier definieren, z.B.<br>
   define('UPDATER_PREFIX_TEXT', 'Ihr Preis: ');<br>
   <br>
-  8)<br>
+  7)<br>
   Optional<br>
   Falls Sie bei verschiedenen Attributkombinationen fehlerhafte Anzeigen der Preisänderungen feststellen, können Sie in includes/classes/dynamic_price_updater.php ein Logging aktivieren, das dann im Ordner logs ein DPU_debug.log schreibt, das Informationen zu den vorgenommenen Operationen enthält. Nur für Testzwecke aktivieren!
 </p>

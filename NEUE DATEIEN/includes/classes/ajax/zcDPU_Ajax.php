@@ -7,7 +7,7 @@
  * @copyright Portions Copyright 2003 osCommerce
  * Zen Cart German Version - www.zen-cart-pro.at
  * @license https://www.zen-cart-pro.at/license/3_0.txt GNU General Public License V3.0
- * @version $Id: zcDPU_Ajax.php 2023-02-25 19:55:51Z webchills $
+ * @version $Id: zcDPU_Ajax.php 2023-02-26 09:47:51Z webchills $
  */
 class zcDPU_Ajax extends base {
 
@@ -85,10 +85,7 @@ class zcDPU_Ajax extends base {
     $this->insertProduct();
     $this->shoppingCart->calculate();
     $this->removeExtraSelections();
-    $show_dynamic_price_updater_sidebox = true;
-    if ($show_dynamic_price_updater_sidebox === true) {
-      $this->getSideboxContent();
-    }
+    
     $this->prepareOutput();
 
     $data = [];
@@ -607,147 +604,6 @@ class zcDPU_Ajax extends base {
       $cart_quantity = !empty($_POST['cart_quantity']) ? $_POST['cart_quantity'] : 0;
             $this->shoppingCart->contents[$products_id] = ['qty' => (convertToFloat($cart_quantity) <= 0 ? zen_get_buy_now_qty($products_id) : convertToFloat($cart_quantity))];
     }
-  }
-
-  /**
-   * Prepares the output for the Updater's sidebox display
-   *
-   * @global object $currencies
-   * @global object $db
-   */
-    protected function getSideboxContent(): void
-  {
-    global $currencies, $db;
-
-    $out = [];
-    $global_total = 0;
-    $products = $this->shoppingCart->get_products();
-      foreach ($products as $cartProduct) {
-
-      $product = $db->Execute("SELECT products_id, products_price, products_tax_class_id, products_weight,
-                                      products_priced_by_attribute, product_is_always_free_shipping, products_discount_type, products_discount_type_from,
-                                      products_virtual, products_model
-                               FROM " . TABLE_PRODUCTS . "
-                                 WHERE products_id = " . (int)$cartProduct['id']);
-
-      $prid = $product->fields['products_id'];
-      $products_tax = zen_get_tax_rate(0);
-      $products_price = $product->fields['products_price'];
-        $qty = convertToFloat($cartProduct['quantity']);
-
-        if (isset($this->shoppingCart->contents[$cartProduct['id']]['attributes']) && is_array($this->shoppingCart->contents[$cartProduct['id']]['attributes'])) {
-
-          foreach ($this->shoppingCart->contents[$cartProduct['id']]['attributes'] as $option => $value) {
-
-          $attribute_price = $db->Execute("SELECT *
-                                           FROM " . TABLE_PRODUCTS_ATTRIBUTES . "
-                                           WHERE products_id = " . (int)$prid . "
-                                           AND options_id = " . (int)$option . "
-                                           AND options_values_id = " . (int)$value);
-
-          if ($attribute_price->EOF) {
-            continue;
-          }
-
-          $data = $db->Execute("SELECT products_options_values_name
-                                FROM " . TABLE_PRODUCTS_OPTIONS_VALUES . "
-                                WHERE products_options_values_id = " . (int)$value);
-          $name = $data->fields['products_options_values_name'];
-
-          $new_attributes_price = 0;
-          $discount_type_id = '';
-          $sale_maker_discount = '';
-          $total = 0;
-
-            if ($attribute_price->fields['product_attribute_is_free'] === '1' && zen_get_products_price_is_free((int)$prid)) {
-              // no charge for attribute
-            } else {
-            // + or blank adds
-              if ($attribute_price->fields['price_prefix'] === '-') {
-              // appears to confuse products priced by attributes
-                if ($product->fields['product_is_always_free_shipping'] === '1' || $product->fields['products_virtual'] === '1') {
-                $shipping_attributes_price = zen_get_discount_calc($product->fields['products_id'], $attribute_price->fields['products_attributes_id'], $attribute_price->fields['options_values_price'], $qty);
-                $this->free_shipping_price -= $qty * zen_add_tax(($shipping_attributes_price), $products_tax);
-              }
-                if ($attribute_price->fields['attributes_discounted'] === '1') {
-                // calculate proper discount for attributes
-                $new_attributes_price = zen_get_discount_calc($product->fields['products_id'], $attribute_price->fields['products_attributes_id'], $attribute_price->fields['options_values_price'], $qty);
-                $total -= $qty * zen_add_tax(($new_attributes_price), $products_tax);
-              } else {
-                $total -= $qty * zen_add_tax($attribute_price->fields['options_values_price'], $products_tax);
-              }
-              $total = $total;
-            } else {
-              // appears to confuse products priced by attributes
-                if ($product->fields['product_is_always_free_shipping'] === '1' || $product->fields['products_virtual'] === '1') {
-                $shipping_attributes_price = zen_get_discount_calc($product->fields['products_id'], $attribute_price->fields['products_attributes_id'], $attribute_price->fields['options_values_price'], $qty);
-                $this->free_shipping_price += $qty * zen_add_tax(($shipping_attributes_price), $products_tax);
-              }
-                if ($attribute_price->fields['attributes_discounted'] === '1') {
-                // calculate proper discount for attributes
-                $new_attributes_price = zen_get_discount_calc($product->fields['products_id'], $attribute_price->fields['products_attributes_id'], $attribute_price->fields['options_values_price'], $qty);
-                  $total += $qty * convertToFloat(zen_add_tax(($new_attributes_price), $products_tax));
-
-                  if ($this->DPUdebug) {
-                      $tmp = convertToFloat(zen_add_tax(($new_attributes_price), $products_tax));
-                      $tmp = __LINE__ . ': $option=' . $option . ' ' . gettype($option) . "\n" . '$value=' . $value . ' ' . gettype($value) . ', $total=' . $total . ' ' . gettype($total) . ', $qty=' . $qty . ' ' . gettype($qty) . ', $new_attributes_price=' . $new_attributes_price . ' ' . gettype($new_attributes_price) . ', $products_tax=' . $products_tax . ' ' . gettype($products_tax) . ', fn zen_add_tax=' . $tmp . ' ' . gettype($tmp) . ', $total=' . $total;
-                      $this->logDPU($tmp);
-                  }
-
-              } else {
-                  $total += $qty * convertToFloat(zen_add_tax($attribute_price->fields['options_values_price'], $products_tax));
-              }
-            }
-          }
-          $global_total += $total;
-          $cart_quantity = !empty($_POST['cart_quantity']) ? $_POST['cart_quantity'] : 0;
-          $qty2 = sprintf('<span class="DPUSideboxQuantity">' . DPU_SIDEBOX_QUANTITY_FRAME . '</span>', convertToFloat($cart_quantity));
-            if (defined('DPU_SHOW_SIDEBOX_CURRENCY_SYMBOLS') && DPU_SHOW_SIDEBOX_CURRENCY_SYMBOLS === 'false') {
-            $decimal_places = $currencies->get_decimal_places($_SESSION['currency']);
-            $decimal_point = $currencies->currencies[$_SESSION['currency']]['decimal_point'];
-            $thousands_point = $currencies->currencies[$_SESSION['currency']]['thousands_point'];
-            /* use of number_format is governed by the instruction from the php manual:
-             *  http://php.net/manual/en/function.number-format.php
-             * By providing below all four values, they will be assigned/used as provided above.
-             *  At time of this comment, if only one parameter is used below (remove/comment out the comma to the end of $thousands_point)
-             *   then just the number will come back with a comma used at every thousands group (ie. 1,000).
-             *  With the first two parameters provided, a comma will be used at every thousands group and a decimal (.) for every part of the whole number.
-             *  The only other option to use this function is to provide all four parameters with the third and fourth parameters identifying the
-             *   decimal point and thousands group separater, respectively.
-             */
-            $total = sprintf(DPU_SIDEBOX_PRICE_FRAME, number_format($this->shoppingCart->total, $decimal_places, $decimal_point, $thousands_point));
-          } else {
-            $total = sprintf(DPU_SIDEBOX_PRICE_FRAME, $currencies->display_price($total, 0 /* ?? Should this tax be applied? zen_get_tax_rate($product_check->fields['products_tax_class_id']) */));
-          }
-          $out[] = sprintf(DPU_SIDEBOX_FRAME, $name, $total, $qty2);
-        }
-      }
-    } // EOF FOR loop of product
-
-    if (defined('DPU_SHOW_SIDEBOX_CURRENCY_SYMBOLS') && DPU_SHOW_SIDEBOX_CURRENCY_SYMBOLS === 'false') {
-      $decimal_places = $currencies->get_decimal_places($_SESSION['currency']);
-      $decimal_point = $currencies->currencies[$_SESSION['currency']]['decimal_point'];
-      $thousands_point = $currencies->currencies[$_SESSION['currency']]['thousands_point'];
-      /* use of number_format is governed by the instruction from the php manual:
-       *  https://php.net/manual/en/function.number-format.php
-       * By providing below all four values, they will be assigned/used as provided above.
-       *  At time of this comment, if only one parameter is used below (remove/comment out the comma to the end of $thousands_point)
-       *   then just the number will come back with a comma used at every thousands group (ie. 1,000).
-       *  With the first two parameters provided, a comma will be used at every thousands group and a decimal (.) for every part of the whole number.
-       *  The only other option to use this function is to provide all four parameters with the third and fourth parameters identifying the
-       *   decimal point and thousands group separater, respectively.
-       */
-      $out[] = sprintf('<hr>' . DPU_SIDEBOX_TOTAL_FRAME, number_format($this->shoppingCart->total, $decimal_places, $decimal_point, $thousands_point));
-    } else {
-      $out[] = sprintf('<hr>' . DPU_SIDEBOX_TOTAL_FRAME, $currencies->display_price($this->shoppingCart->total, 0));
-    }
-
-    $cart_quantity = !empty($_POST['cart_quantity']) ? $_POST['cart_quantity'] : 0;
-    $qty2 = sprintf('<span class="DPUSideboxQuantity">' . DPU_SIDEBOX_QUANTITY_FRAME . '</span>', convertToFloat($cart_quantity));
-    $total = sprintf(DPU_SIDEBOX_PRICE_FRAME, $currencies->display_price($this->shoppingCart->total - $global_total, 0));
-    array_unshift($out, sprintf(DPU_SIDEBOX_FRAME, DPU_BASE_PRICE, $total, $qty2));
-
-    $this->responseText['sideboxContent'] = implode('', $out);
   }
 
     /** optionally create a debugging log
