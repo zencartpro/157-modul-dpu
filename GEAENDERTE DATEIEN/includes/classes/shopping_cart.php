@@ -2,11 +2,11 @@
 /**
  * Class for managing the Shopping Cart
  * Zen Cart German Specific (158 code in 157 /zencartpro adaptations)
- * @copyright Copyright 2003-2023 Zen Cart Development Team
+ * @copyright Copyright 2003-2024 Zen Cart Development Team
  * Zen Cart German Version - www.zen-cart-pro.at
  * @copyright Portions Copyright 2003 osCommerce
  * @license https://www.zen-cart-pro.at/license/3_0.txt GNU General Public License V3.0
- * @version $Id: shopping_cart.php for Dynamic Price Updater 2023-11-21 16:25:29Z webchills $
+ * @version $Id: shopping_cart.php for Dynamic Price Updater 2024-01-27 14:40:29Z webchills $
  */
 
 if (!defined('IS_ADMIN_FLAG')) {
@@ -684,7 +684,7 @@ class shoppingCart extends base
 
             $product = $product->fields;
             $this->notify('NOTIFY_CART_CALCULATE_PRODUCT_PRICE', $uprid, $product);
-            $prid = zen_get_prid($product['products_id']);   //-TODO: Needed?  Just in case the id was changed by the observer?
+            $prid = zen_get_prid($product['products_id']);
 
             $products_tax = zen_get_tax_rate($product['products_tax_class_id']);
             $products_price = $product['products_price'];
@@ -1398,7 +1398,8 @@ class shoppingCart extends base
             }
 
             // convert quantity to proper decimals
-            if (QUANTITY_DECIMALS === '0') {
+            $precision = QUANTITY_DECIMALS > 0 ? (int)QUANTITY_DECIMALS : 0;
+            if ($precision === 0) {
                 $new_qty = $data['qty'];
             } else {
                 $fix_qty = $data['qty'];
@@ -1413,7 +1414,7 @@ class shoppingCart extends base
             }
             $check_unit_decimals = $product['products_quantity_order_units'];
             if (strpos($check_unit_decimals, '.') !== false) {
-                $new_qty = round($new_qty, QUANTITY_DECIMALS);
+                $new_qty = round($new_qty, $precision);
             } else {
                 $new_qty = round($new_qty, 0);
             }
@@ -2408,15 +2409,16 @@ class shoppingCart extends base
             $messageStackPosition = 'shopping_cart';
         }
         $old_quantity = $check_qty;
-        if (QUANTITY_DECIMALS !== '0') {
+        $precision = QUANTITY_DECIMALS > 0 ? (int)QUANTITY_DECIMALS : 0;
+        if ($precision !== 0) {
             $fix_qty = $check_qty;
             if (strpos($fix_qty, '.') !== false) {
                 $new_qty = $fix_qty;
             } else {
                 $new_qty = preg_replace('/[0]+$/', '', $check_qty);
             }
-        } elseif ($check_qty != round($check_qty, QUANTITY_DECIMALS)) {
-            $new_qty = round($check_qty, QUANTITY_DECIMALS);
+        } elseif ($check_qty != round($check_qty, $precision)) {
+            $new_qty = round($check_qty, $precision);
             $messageStack->add_session($messageStackPosition, ERROR_QUANTITY_ADJUSTED . zen_get_products_name($product_id) . ERROR_QUANTITY_CHANGED_FROM . $old_quantity . ERROR_QUANTITY_CHANGED_TO . $new_qty, 'caution');
         } else {
             $new_qty = $check_qty;
